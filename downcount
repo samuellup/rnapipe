@@ -1,0 +1,20 @@
+
+USERNAME="MicolLab"
+PASSWORD="MicolLab123."
+REPO="easymap"
+
+TOKEN=`curl https://github.com/login -s -c /tmp/cookies.txt | \
+     hxnormalize | \
+     hxselect 'input[name=authenticity_token]' 2>/dev/null | \
+     perl -lne 'print $1 if /value=\"(\S+)\"/'`
+
+curl -X POST https://github.com/session \
+     -s -b /tmp/cookies.txt -c /tmp/cookies2.txt \
+     --data-urlencode commit="Sign in" \
+     --data-urlencode authenticity_token="$TOKEN" \
+     --data-urlencode login="$USERNAME" \
+     --data-urlencode password="$PASSWORD" > /dev/null
+
+curl "https://github.com/$REPO/graphs/clone-activity-data" \
+     -s -b /tmp/cookies2.txt \
+     -H "x-requested-with: XMLHttpRequest" | jq '.summary'
