@@ -15,11 +15,11 @@ mkdir $out                              # creating output folder
 my_log_file=$out/logs/log.log                # creating log file
 mkdir $out/logs
 touch $my_log_file
-threads=4                               # multithreading (default=1)
+threads=2                               # multithreading (default=1)
 
 # 0. Read quality filter 
 {
-    fastp/fastp -q 20 -u 50  -i $reads_f  -o $out/f_f.fq --adapter_sequence=AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT  1> $out/logs/fastp-1 2> $out/logs/fastp-2
+    fastp/fastp  -i $reads_f  -o $out/f_f.fq --adapter_sequence=AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT  1> $out/logs/fastp-1 2> $out/logs/fastp-2
 } || {
     echo "Reads filtering failed"  >> $my_log_file 
     exit

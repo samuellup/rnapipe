@@ -26,8 +26,8 @@ threads=2                               # multithreading (default=1)
     exit
 }
 
-#rm  $reads_f
-#rm  $reads_r
+rm  $reads_f
+rm  $reads_r
 
 # 1. Mapping to reference genome with HISAT2 
 # Index preparation
